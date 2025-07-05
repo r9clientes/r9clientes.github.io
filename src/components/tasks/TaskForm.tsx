@@ -5,7 +5,7 @@ import { taskSchema, TaskFormData } from '../../lib/validations'
 import { Task } from '../../lib/supabase'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
+import { X } from 'lucide-react'
 
 interface TaskFormProps {
   task?: Task
@@ -34,39 +34,52 @@ export function TaskForm({ task, onSubmit, onCancel, loading }: TaskFormProps) {
   })
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>{task ? 'Editar Tarefa' : 'Nova Tarefa'}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input
-            label="Título"
-            {...register('title')}
-            error={errors.title?.message}
+    <div className="bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 w-full max-w-md mx-auto shadow-2xl">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          {task ? 'Editar Tarefa' : 'Nova Tarefa'}
+        </h2>
+        <Button
+          variant="ghost"
+          onClick={onCancel}
+          className="text-gray-400 hover:text-white hover:bg-gray-700 p-2 rounded-lg transition-all duration-300"
+        >
+          <X className="h-5 w-5" />
+        </Button>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <Input
+          label="Título"
+          {...register('title')}
+          error={errors.title?.message}
+          className="bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
+        />
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-300">
+            Descrição
+          </label>
+          <textarea
+            {...register('description')}
+            className="block w-full rounded-lg border border-gray-600 bg-gray-700/50 px-3 py-3 text-white placeholder-gray-400 shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 resize-none"
+            rows={3}
+            placeholder="Descreva sua tarefa..."
           />
+          {errors.description && (
+            <p className="text-sm text-red-400">{errors.description.message}</p>
+          )}
+        </div>
 
-          <div className="space-y-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Descrição
-            </label>
-            <textarea
-              {...register('description')}
-              className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              rows={3}
-            />
-            {errors.description && (
-              <p className="text-sm text-red-600">{errors.description.message}</p>
-            )}
-          </div>
-
-          <div className="space-y-1">
-            <label className="block text-sm font-medium text-gray-700">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-300">
               Status
             </label>
             <select
               {...register('status')}
-              className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-600 bg-gray-700/50 px-3 py-3 text-white shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20"
             >
               <option value="pending">Pendente</option>
               <option value="in_progress">Em Progresso</option>
@@ -74,37 +87,47 @@ export function TaskForm({ task, onSubmit, onCancel, loading }: TaskFormProps) {
             </select>
           </div>
 
-          <div className="space-y-1">
-            <label className="block text-sm font-medium text-gray-700">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-300">
               Prioridade
             </label>
             <select
               {...register('priority')}
-              className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-600 bg-gray-700/50 px-3 py-3 text-white shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20"
             >
               <option value="low">Baixa</option>
               <option value="medium">Média</option>
               <option value="high">Alta</option>
             </select>
           </div>
+        </div>
 
-          <Input
-            label="Data de Vencimento"
-            type="date"
-            {...register('due_date')}
-            error={errors.due_date?.message}
-          />
+        <Input
+          label="Data de Vencimento"
+          type="date"
+          {...register('due_date')}
+          error={errors.due_date?.message}
+          className="bg-gray-700/50 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500/20"
+        />
 
-          <div className="flex space-x-2">
-            <Button type="submit" loading={loading} className="flex-1">
-              {task ? 'Atualizar' : 'Criar'}
-            </Button>
-            <Button type="button" variant="secondary" onClick={onCancel}>
-              Cancelar
-            </Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+        <div className="flex space-x-3 pt-4">
+          <Button 
+            type="submit" 
+            loading={loading} 
+            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+          >
+            {task ? 'Atualizar' : 'Criar'}
+          </Button>
+          <Button 
+            type="button" 
+            variant="ghost" 
+            onClick={onCancel}
+            className="px-6 border border-gray-600 text-gray-300 hover:text-white hover:border-gray-400 py-3 rounded-lg font-semibold transition-all duration-300"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </form>
+    </div>
   )
 }
