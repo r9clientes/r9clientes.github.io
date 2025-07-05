@@ -29,7 +29,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
           <nav className="flex justify-between items-center">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                R9 Agency
+                R9 Clientes
               </h1>
               <div className="w-2 h-2 bg-cyan-400 rounded-full ml-2"></div>
             </div>
@@ -39,8 +39,8 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
                 Início
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all group-hover:w-full"></span>
               </a>
-              <a href="#recursos" className="text-gray-300 hover:text-white transition-colors relative group">
-                Recursos
+              <a href="#planos" className="text-gray-300 hover:text-white transition-colors relative group">
+                Planos
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all group-hover:w-full"></span>
               </a>
               <a href="#sobre" className="text-gray-300 hover:text-white transition-colors relative group">
@@ -64,14 +64,15 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Gerencie suas tarefas com{' '}
+              Transforme seu negócio com{' '}
               <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                tecnologia futurista
-              </span>
+                marketing digital
+              </span>{' '}
+              do futuro
             </h1>
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Sistema inteligente de gerenciamento de tarefas com design moderno, 
-              segurança avançada e experiência do usuário excepcional.
+              Estratégias inovadoras e tecnologia de ponta para impulsionar sua 
+              presença online e multiplicar seus clientes.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
@@ -86,6 +87,140 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
               >
                 Ver Demonstração
               </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Plans Section */}
+      <section className="relative z-10 py-20" id="planos">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">
+              Nossos <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Planos</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Plano Basic */}
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 transition-all duration-300 hover:transform hover:scale-105 hover:bg-gray-800/70 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold mb-4 text-blue-400">Basic</h3>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-blue-400">R$ 199</span>
+                  <p className="text-gray-400 mt-2">Duração: 15 dias</p>
+                </div>
+                <ul className="space-y-3 mb-8 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Análise de perfil e concorrência
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Estratégia personalizada
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Otimização de presença online
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Suporte por e-mail
+                  </li>
+                </ul>
+                <Button 
+                  onClick={onGetStarted}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-lg font-semibold transition-all duration-300"
+                >
+                  Escolher Plano
+                </Button>
+              </div>
+            </div>
+
+            {/* Plano Pro */}
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 transition-all duration-300 hover:transform hover:scale-105 hover:bg-gray-800/70 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold mb-4 text-purple-400">Pro</h3>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-purple-400">R$ 299</span>
+                  <p className="text-gray-400 mt-2">Duração: 30 dias</p>
+                </div>
+                <ul className="space-y-3 mb-8 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Todos os recursos do Basic
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Análise de mercado avançada
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Estratégia de conteúdo
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Otimização de SEO
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Suporte prioritário
+                  </li>
+                </ul>
+                <Button 
+                  onClick={onGetStarted}
+                  className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-3 rounded-lg font-semibold transition-all duration-300"
+                >
+                  Escolher Plano
+                </Button>
+              </div>
+            </div>
+
+            {/* Plano Master */}
+            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 transition-all duration-300 hover:transform hover:scale-105 hover:bg-gray-800/70 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-transparent"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold mb-4 text-cyan-400">Master</h3>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-cyan-400">R$ 667</span>
+                  <p className="text-gray-400 mt-2">Duração: Bimestral</p>
+                </div>
+                <ul className="space-y-3 mb-8 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Todos os recursos do Pro
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Estratégia completa omnichannel
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Automação de marketing
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Relatórios detalhados
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Consultoria exclusiva
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cyan-400 mr-3">✓</span>
+                    Suporte 24/7
+                  </li>
+                </ul>
+                <Button 
+                  onClick={onGetStarted}
+                  className="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-gray-900 py-3 rounded-lg font-semibold transition-all duration-300"
+                >
+                  Escolher Plano
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -148,7 +283,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             <div>
               <div className="flex items-center mb-4">
                 <h3 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                  R9 Agency
+                  R9 Clientes
                 </h3>
                 <div className="w-2 h-2 bg-cyan-400 rounded-full ml-2"></div>
               </div>
@@ -161,7 +296,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
               <h4 className="font-semibold mb-4">Links Rápidos</h4>
               <div className="space-y-2">
                 <a href="#inicio" className="block text-gray-400 hover:text-white transition-colors">Início</a>
-                <a href="#recursos" className="block text-gray-400 hover:text-white transition-colors">Recursos</a>
+                <a href="#planos" className="block text-gray-400 hover:text-white transition-colors">Planos</a>
                 <a href="#sobre" className="block text-gray-400 hover:text-white transition-colors">Sobre</a>
               </div>
             </div>
@@ -178,8 +313,8 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             <div>
               <h4 className="font-semibold mb-4">Contato</h4>
               <div className="space-y-2">
-                <a href="mailto:contato@r9agency.com" className="block text-gray-400 hover:text-white transition-colors">
-                  contato@r9agency.com
+                <a href="mailto:contato@r9clientes.com" className="block text-gray-400 hover:text-white transition-colors">
+                  contato@r9clientes.com
                 </a>
                 <a href="tel:+551199999999" className="block text-gray-400 hover:text-white transition-colors">
                   +55 (11) 9999-9999
@@ -190,7 +325,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
 
           <div className="border-t border-gray-800 mt-8 pt-8 text-center">
             <p className="text-gray-500">
-              © 2025 R9 Agency. Todos os direitos reservados.
+              © 2025 R9 Clientes. Todos os direitos reservados.
             </p>
           </div>
         </div>
