@@ -470,4 +470,5 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
       </footer>
     </div>
   )
+  )
 }
