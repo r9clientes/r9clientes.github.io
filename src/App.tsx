@@ -1,4 +1,3 @@
-import React from 'react'
 import { Toaster } from 'sonner'
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { AuthLayout } from './components/layout/AuthLayout'
@@ -9,8 +8,13 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-paper flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-md bg-ink font-display text-sm font-bold text-paper animate-pulse">
+            R9
+          </span>
+          <span className="font-mono text-xs uppercase tracking-widest text-smoke">Abrindo o painel…</span>
+        </div>
       </div>
     )
   }

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { supabase, Task } from '../lib/supabase'
+import { useState, useEffect, useCallback } from 'react'
+import { api, Task } from '../lib/api'
 import { useAuth } from './useAuth'
 import { toast } from 'sonner'
 
@@ -8,87 +8,59 @@ export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    if (user) {
-      fetchTasks()
-    }
-  }, [user])
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       setLoading(true)
-      const { data, error } = await supabase
-        .from('tasks')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('created_at', { ascending: false })
-
-      if (error) throw error
-      setTasks(data || [])
+      const data = await api.listTasks()
+      setTasks(data)
     } catch (error: any) {
       toast.error('Erro ao carregar tarefas')
       console.error('Error fetching tasks:', error)
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const createTask = async (taskData: Omit<Task, 'id' | 'user_id' | 'created_at' | 'updated_at'>) => {
+  useEffect(() => {
+    if (user) {
+      fetchTasks()
+    } else {
+      setTasks([])
+      setLoading(false)
+    }
+  }, [user, fetchTasks])
+
+  const createTask = async (taskData: { title: string; description?: string; status: Task['status']; priority: Task['priority']; due_date?: string }) => {
     try {
-      const { data, error } = await supabase
-        .from('tasks')
-        .insert([
-          {
-            ...taskData,
-            user_id: user?.id,
-          },
-        ])
-        .select()
-        .single()
-
-      if (error) throw error
+      const data = await api.createTask(taskData)
       setTasks(prev => [data, ...prev])
       toast.success('Tarefa criada com sucesso!')
       return data
     } catch (error: any) {
-      toast.error('Erro ao criar tarefa')
+      toast.error(error.message || 'Erro ao criar tarefa')
       throw error
     }
   }
 
-  const updateTask = async (id: string, updates: Partial<Task>) => {
+  const updateTask = async (id: string, updates: Partial<{ title: string; description: string; status: Task['status']; priority: Task['priority']; due_date: string }>) => {
     try {
-      const { data, error } = await supabase
-        .from('tasks')
-        .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq('id', id)
-        .eq('user_id', user?.id)
-        .select()
-        .single()
-
-      if (error) throw error
+      const data = await api.updateTask(id, updates)
       setTasks(prev => prev.map(task => task.id === id ? data : task))
       toast.success('Tarefa atualizada com sucesso!')
       return data
     } catch (error: any) {
-      toast.error('Erro ao atualizar tarefa')
+      toast.error(error.message || 'Erro ao atualizar tarefa')
       throw error
     }
   }
 
   const deleteTask = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('tasks')
-        .delete()
-        .eq('id', id)
-        .eq('user_id', user?.id)
-
-      if (error) throw error
+      await api.deleteTask(id)
       setTasks(prev => prev.filter(task => task.id !== id))
       toast.success('Tarefa excluída com sucesso!')
     } catch (error: any) {
-      toast.error('Erro ao excluir tarefa')
+      toast.error(error.message || 'Erro ao excluir tarefa')
       throw error
     }
   }

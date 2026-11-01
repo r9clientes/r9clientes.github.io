@@ -1,4 +1,3 @@
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, LoginFormData } from '../../lib/validations'
@@ -29,56 +28,43 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
   }
 
   return (
-    <div className="bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center mb-4">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-            R9 Agency
-          </h1>
-          <div className="w-2 h-2 bg-cyan-400 rounded-full ml-2"></div>
-        </div>
-        <h2 className="text-xl font-semibold text-white mb-2">Bem-vindo de volta</h2>
-        <p className="text-gray-400">Entre na sua conta para continuar</p>
-      </div>
+    <div className="w-full">
+      <h2 className="font-display text-3xl font-semibold tracking-tight">Bem-vindo de volta</h2>
+      <p className="mt-1.5 text-smoke">Entre para ver o quadro da sua operação.</p>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-7 space-y-5">
         <Input
           label="Email"
           type="email"
           {...register('email')}
           error={errors.email?.message}
           autoComplete="email"
-          className="bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
-          placeholder="seu@email.com"
+          placeholder="voce@empresa.com"
         />
-        
+
         <Input
           label="Senha"
           type="password"
           {...register('password')}
           error={errors.password?.message}
           autoComplete="current-password"
-          className="bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
           placeholder="••••••••"
         />
 
-        <Button
-          type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-          loading={loading}
-        >
-          Entrar
+        <Button type="submit" className="w-full" loading={loading}>
+          Entrar no painel
         </Button>
 
-        <div className="text-center">
+        <p className="text-center text-sm text-smoke">
+          Ainda não tem conta?{' '}
           <button
             type="button"
             onClick={onToggleMode}
-            className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            className="font-semibold text-ember underline-offset-4 hover:underline"
           >
-            Não tem uma conta? <span className="font-semibold">Cadastre-se</span>
+            Cadastre-se
           </button>
-        </div>
+        </p>
       </form>
     </div>
   )

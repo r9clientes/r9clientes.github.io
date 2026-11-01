@@ -1,6 +1,6 @@
 # Sistema de Gerenciamento de Tarefas
 
-Um sistema robusto e seguro para gerenciamento de tarefas pessoais, construído com React, TypeScript, Supabase e Tailwind CSS.
+Um sistema robusto e seguro para gerenciamento de tarefas pessoais, construído com React, TypeScript, Netlify Database e Tailwind CSS.
 
 ## 🚀 Funcionalidades
 
@@ -31,7 +31,7 @@ Um sistema robusto e seguro para gerenciamento de tarefas pessoais, construído 
 
 - **Frontend**: React 18, TypeScript, Vite
 - **Styling**: Tailwind CSS
-- **Backend**: Supabase (PostgreSQL, Auth, RLS)
+- **Backend**: Netlify Functions + Netlify Database (PostgreSQL via Drizzle ORM)
 - **Validação**: Zod + React Hook Form
 - **UI Components**: Radix UI, Lucide React
 - **Notificações**: Sonner
@@ -40,18 +40,18 @@ Um sistema robusto e seguro para gerenciamento de tarefas pessoais, construído 
 
 ### Pré-requisitos
 - Node.js 18+
-- Conta no Supabase
 
 ### Instalação
 
-1. **Configure o Supabase**:
-   - Clique no botão "Connect to Supabase" no canto superior direito
-   - Crie um novo projeto ou conecte um existente
-   - As variáveis de ambiente serão configuradas automaticamente
+1. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
 
-2. **Execute as migrações**:
-   - As migrações do banco de dados serão aplicadas automaticamente
-   - Isso criará as tabelas necessárias e configurará a segurança
+2. **Banco de dados**:
+   - O Netlify Database (PostgreSQL) é provisionado automaticamente no deploy
+   - As migrações em `netlify/database/migrations/` são aplicadas automaticamente
+   - Nenhuma variável de ambiente precisa ser configurada
 
 3. **Inicie o servidor de desenvolvimento**:
    ```bash

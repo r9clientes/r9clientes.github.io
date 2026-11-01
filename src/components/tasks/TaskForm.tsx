@@ -1,8 +1,7 @@
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { taskSchema, TaskFormData } from '../../lib/validations'
-import { Task } from '../../lib/supabase'
+import { Task } from '../../lib/api'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
 import { X } from 'lucide-react'
@@ -34,66 +33,70 @@ export function TaskForm({ task, onSubmit, onCancel, loading }: TaskFormProps) {
   })
 
   return (
-    <div className="bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 w-full max-w-md mx-auto shadow-2xl">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-          {task ? 'Editar Tarefa' : 'Nova Tarefa'}
-        </h2>
-        <Button
-          variant="ghost"
+    <div className="w-full rounded-xl border-2 border-ink bg-card p-7 shadow-hard">
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-ember">
+            {task ? 'Editando tarefa' : 'Nova tarefa'}
+          </p>
+          <h2 className="mt-1 font-display text-3xl font-semibold tracking-tight">
+            {task ? 'Ajustar tarefa' : 'O que precisa sair do papel?'}
+          </h2>
+        </div>
+        <button
           onClick={onCancel}
-          className="text-gray-400 hover:text-white hover:bg-gray-700 p-2 rounded-lg transition-all duration-300"
+          aria-label="Fechar formulário"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-smoke transition-colors hover:bg-ink/5 hover:text-ink"
         >
           <X className="h-5 w-5" />
-        </Button>
+        </button>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <Input
           label="Título"
           {...register('title')}
           error={errors.title?.message}
-          className="bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
+          placeholder="Ex.: Publicar o case do trimestre"
         />
 
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-300">
+        <div className="space-y-1.5">
+          <label className="block font-mono text-xs font-medium uppercase tracking-widest text-smoke">
             Descrição
           </label>
           <textarea
             {...register('description')}
-            className="block w-full rounded-lg border border-gray-600 bg-gray-700/50 px-3 py-3 text-white placeholder-gray-400 shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 resize-none"
+            className="block w-full resize-none rounded-md border-2 border-ink/20 bg-card px-3.5 py-2.5 text-ink placeholder:text-smoke/60 transition-colors focus:border-ember focus:outline-none"
             rows={3}
-            placeholder="Descreva sua tarefa..."
+            placeholder="Contexto, links e critérios de pronto..."
           />
           {errors.description && (
-            <p className="text-sm text-red-400">{errors.description.message}</p>
+            <p className="text-sm font-medium text-brick">{errors.description.message}</p>
           )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-300">
+          <div className="space-y-1.5">
+            <label className="block font-mono text-xs font-medium uppercase tracking-widest text-smoke">
               Status
             </label>
             <select
               {...register('status')}
-              className="block w-full rounded-lg border border-gray-600 bg-gray-700/50 px-3 py-3 text-white shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20"
+              className="block w-full rounded-md border-2 border-ink/20 bg-card px-3.5 py-2.5 text-ink transition-colors focus:border-ember focus:outline-none"
             >
               <option value="pending">Pendente</option>
-              <option value="in_progress">Em Progresso</option>
+              <option value="in_progress">Em progresso</option>
               <option value="completed">Concluída</option>
             </select>
           </div>
 
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-300">
+          <div className="space-y-1.5">
+            <label className="block font-mono text-xs font-medium uppercase tracking-widest text-smoke">
               Prioridade
             </label>
             <select
               {...register('priority')}
-              className="block w-full rounded-lg border border-gray-600 bg-gray-700/50 px-3 py-3 text-white shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20"
+              className="block w-full rounded-md border-2 border-ink/20 bg-card px-3.5 py-2.5 text-ink transition-colors focus:border-ember focus:outline-none"
             >
               <option value="low">Baixa</option>
               <option value="medium">Média</option>
@@ -103,27 +106,17 @@ export function TaskForm({ task, onSubmit, onCancel, loading }: TaskFormProps) {
         </div>
 
         <Input
-          label="Data de Vencimento"
+          label="Data de vencimento"
           type="date"
           {...register('due_date')}
           error={errors.due_date?.message}
-          className="bg-gray-700/50 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500/20"
         />
 
-        <div className="flex space-x-3 pt-4">
-          <Button 
-            type="submit" 
-            loading={loading} 
-            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-          >
-            {task ? 'Atualizar' : 'Criar'}
+        <div className="flex gap-3 pt-2">
+          <Button type="submit" loading={loading} variant="accent" className="flex-1">
+            {task ? 'Salvar ajustes' : 'Criar tarefa'}
           </Button>
-          <Button 
-            type="button" 
-            variant="ghost" 
-            onClick={onCancel}
-            className="px-6 border border-gray-600 text-gray-300 hover:text-white hover:border-gray-400 py-3 rounded-lg font-semibold transition-all duration-300"
-          >
+          <Button type="button" variant="outline" onClick={onCancel}>
             Cancelar
           </Button>
         </div>
